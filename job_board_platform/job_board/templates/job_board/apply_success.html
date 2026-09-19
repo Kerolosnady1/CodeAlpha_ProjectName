@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html>
+<head><title>Application Sent</title></head>
+<body style="text-align: center; padding-top: 100px; font-family: Arial;">
+    <h1 style="color: green;">Application Submitted!</h1>
+    <p>Your application for <strong>{{ job.title }}</strong> has been sent to <strong>{{ job.employer.company_name }}</strong>.</p>
+    <a href="{% url 'job_list' %}">Browse more jobs</a>
+</body>
+</html>

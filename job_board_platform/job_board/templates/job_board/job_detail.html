@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ job.title }} - Details</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 40px; color: #333; }
+        .container { max-width: 800px; margin: auto; }
+        .job-header { border-bottom: 2px solid #eee; padding-bottom: 20px; margin-bottom: 20px; }
+        .apply-section { background: #f9f9f9; padding: 20px; border-radius: 8px; border: 1px solid #ddd; }
+        input, button { display: block; width: 100%; padding: 10px; margin-top: 10px; box-sizing: border-box; }
+        button { background: #007bff; color: white; border: none; cursor: pointer; font-weight: bold; }
+        .back-link { text-decoration: none; color: #007bff; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="{% url 'job_list' %}" class="back-link">← Back to Job List</a>
+        
+        <div class="job-header">
+            <h1>{{ job.title }}</h1>
+            <p><strong>Company:</strong> {{ job.employer.company_name }}</p>
+            <p><strong>Location:</strong> {{ job.location }} | <strong>Salary:</strong> {{ job.salary|default:"Not Disclosed" }}</p>
+        </div>
+
+        <h3>Job Description</h3>
+        <p>{{ job.description|linebreaks }}</p>
+
+        <hr>
+
+        <div class="apply-section">
+            <h3>Apply for this position</h3>
+            <!-- IMPORTANT: enctype="multipart/form-data" is REQUIRED for file uploads -->
+            <form action="{% url 'apply_job' job.pk %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <label>Your Full Name:</label>
+                <input type="text" name="name" placeholder="John Doe" required>
+
+                <label>Your Email:</label>
+                <input type="email" name="email" placeholder="john@example.com" required>
+
+                <label>Upload Resume (PDF/DOC):</label>
+                <input type="file" name="resume" required>
+
+                <button type="submit">Submit Application</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

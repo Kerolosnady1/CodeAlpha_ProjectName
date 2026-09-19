@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Successful</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; text-align: center; }
+        .receipt { 
+            border: 1px solid #333; 
+            padding: 20px; 
+            display: inline-block; 
+            text-align: left; 
+            background: #fff9e6; 
+            min-width: 300px;
+        }
+        .success-msg { color: #28a745; font-size: 24px; font-weight: bold; }
+        .btn { 
+            display: inline-block; 
+            margin-top: 20px; 
+            padding: 10px 20px; 
+            background: #007bff; 
+            color: white; 
+            text-decoration: none; 
+            border-radius: 5px; 
+        }
+    </style>
+</head>
+<body>
+    <div class="success-msg">✔ Order Placed Successfully!</div>
+    <br>
+    <div class="receipt">
+        <h3>Order Receipt</h3>
+        <p><strong>Table:</strong> {{ order.table.number }}</p>
+        <p><strong>Date:</strong> {{ order.created_at|date:"M d, Y H:i" }}</p>
+        <hr>
+        <p><strong>Items:</strong></p>
+        <ul>
+            {% for item in order.items.all %}
+                <li>{{ item.name }} - ${{ item.price }}</li>
+            {% endfor %}
+        </ul>
+        <hr>
+        <p><strong>Total Price: ${{ order.total_price }}</strong></p>
+    </div>
+    <br>
+    <a href="{% url 'restaurant_home' %}" class="btn">Place Another Order</a>
+</body>
+</html>

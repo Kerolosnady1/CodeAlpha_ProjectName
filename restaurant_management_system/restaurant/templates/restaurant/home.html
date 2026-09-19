@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head><title>Restaurant Management</title></head>
+<body>
+    <h1>Menu</h1>
+    <!-- Look at the line right under the <form> tag -->
+<form action="{% url 'place_order' %}" method="POST">
+    {% csrf_token %}  <!-- THIS IS THE MISSING LINE -->
+    
+    <ul>
+        {% for item in menu_items %}
+        <li>
+            <input type="checkbox" name="items" value="{{ item.id }}">
+            {{ item.name }} - ${{ item.price }} (Stock: {{ item.stock_quantity }})
+        </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Select Table</h2>
+    <select name="table_id">
+        {% for table in tables %}
+        <option value="{{ table.id }}">Table {{ table.number }}</option>
+        {% endfor %}
+    </select>
+    <br><br>
+    <button type="submit" style="background:orange; padding:10px;">Place Order</button>
+</form>
+</body>
+</html>
